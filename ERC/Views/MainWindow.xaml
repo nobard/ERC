@@ -3,20 +3,114 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ERC.Views"
+        xmlns:local="clr-namespace:ERC.Views" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="500"
+        Style="{DynamicResource CustomWindowStyle}">
 
-    <StackPanel>
-        <TextBlock Text="Кол-во проживающих:"/>
-        <TextBox/>
-        <TextBlock Text="Приборы учета:"/>
-        <CheckBox IsChecked="False"
-                  Content="ХВС"/>
-        <Frame></Frame>
-        <CheckBox IsChecked="False"
-                  Content="ГВС"/>
-        <CheckBox IsChecked="False"
-                  Content="ЭЭ"/>
-    </StackPanel>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel HorizontalAlignment="Left"
+                    Grid.Row="0">
+            <TextBlock Text="Кол-во проживающих:"
+                       FontSize="16"
+                       Margin="5"/>
+            <TextBox HorizontalAlignment="Left"
+                     Width="50"
+                     Margin="5">
+                <TextBox.Text>
+                    <Binding Path="ResidentsCount">
+                        <Binding.ValidationRules>
+                            <DataErrorValidationRule/>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+
+            <TextBlock Text="Приборы учета:"
+                       FontSize="16"
+                       Margin="5"/>
+
+            <CheckBox x:Name="HvsCheckBox"
+                      Content="ХВС"
+                      Margin="5"/>
+            <StackPanel x:Name="HvsContent"
+                        Visibility="{Binding ElementName=HvsCheckBox,Path=IsChecked,Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Показания:"
+                           Margin="10, 0, 5, 5"/>
+                <TextBox HorizontalAlignment="Left"
+                         Width="50" 
+                         Margin="10, 0, 5, 5">
+                    <TextBox.Text>
+                        <Binding Path="HvsIndication">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+
+            <CheckBox x:Name="GvsCheckBox"
+                      Content="ГВС"
+                      Margin="5"/>
+            <StackPanel x:Name="GvsContent"
+                        Visibility="{Binding ElementName=GvsCheckBox,Path=IsChecked,Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Показания:"
+                           Margin="10, 0, 5, 5"/>
+                <TextBox HorizontalAlignment="Left"
+                         Width="50" 
+                         Margin="10, 0, 5, 5">
+                    <TextBox.Text>
+                        <Binding Path="GvsIndication">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+
+            <CheckBox x:Name="EeCheckBox"
+                      Content="ЭЭ"
+                      Margin="5"/>
+            <StackPanel x:Name="EeContent"
+                        Visibility="{Binding ElementName=EeCheckBox,Path=IsChecked,Converter={StaticResource BoolToVis}}">
+                <TextBlock Text="Показания:"
+                           Margin="10, 0, 5, 5"/>
+                <TextBox HorizontalAlignment="Left"
+                         Width="50" 
+                         Margin="10, 0, 5, 5">
+                    <TextBox.Text>
+                        <Binding Path="EeIndication">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </StackPanel>
+
+        </StackPanel>
+
+        <Button Grid.Row="1"
+                Content="Рассчитать"
+                Command="{Binding EstimateMetersCommand}"
+                Padding="8 4"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"/>
+        <Button Grid.Row="1"
+                HorizontalAlignment="Right"
+                Content="Заполнить БД"
+                Command="{Binding FillBDCommand}"
+                Padding="8, 4"/>
+    </Grid>
 </Window>
