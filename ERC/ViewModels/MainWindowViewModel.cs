@@ -10,75 +10,61 @@ using ERC.Data;
 using ERC.Models;
 using ERC.Utilities;
 
+using static ERC.Models.CalculationAlgorithms;
+
+
 namespace ERC.ViewModels
 {
-    public class MainWindowViewModel : BaseViewModel, IDataErrorInfo
+    public class MainWindowViewModel : BaseViewModel
     {
-        public Meters Meters { get; set; }
+        private Meters meters;
         private List<Service> bd;
-        private string residentsCount;
+        private List<CalculatedService> calculatedServices = new List<CalculatedService>();
         private string hvsIndication;
         private string gvsIndication;
         private string eeIndication;
-
-        public string ResidentsCount
-        {
-            get => residentsCount;
-            set => SetProperty(ref residentsCount, value);
-        }
+        public bool HvsCheckBox { get; set; }
+        public bool GvsCheckBox { get; set; }
+        public bool EeCheckBox { get; set; }
+        public string ResidentsCount { get; set; }
 
         public string HvsIndication
         {
-            get => hvsIndication;
-            set => SetProperty(ref hvsIndication, value);
+            get
+            {
+                if (HvsCheckBox) return hvsIndication;
+
+                return hvsIndication = "";
+            }
         }
 
         public string GvsIndication
         {
-            get => gvsIndication;
-            set => SetProperty(ref gvsIndication, value);
+            get
+            {
+                if (GvsCheckBox) return gvsIndication;
+
+                return gvsIndication = "";
+            }
         }
 
         public string EeIndication
         {
-            get => eeIndication;
-            set => SetProperty(ref eeIndication, value);
+            get
+            {
+                if (EeCheckBox) return eeIndication;
+
+                return eeIndication = "";
+            }
         }
 
-        #region VALIDATION
-        public string this[string columnName]
+        public Meters Meters
         {
             get
             {
-                string error = String.Empty;
-                switch (columnName)
-                {
-                    case "ResidentsCount":
-                        if (String.IsNullOrEmpty(ResidentsCount)) break;
-
-                        if (!int.TryParse(ResidentsCount, out var a))
-                        {
-                            error = "Только числа";
-                        }
-                        break;
-                    case "HvsIndication":
-                        //Обработка ошибок для свойства Name
-                        break;
-                    case "GvsIndication":
-                        //Обработка ошибок для свойства Position
-                        break;
-                    case "EeIndication":
-                        //Обработка ошибок для свойства Position
-                        break;
-                }
-                return error;
+                return meters = meters ?? new Meters();
             }
         }
-        public string Error
-        {
-            get { throw new NotImplementedException(); }
-        }
-        #endregion
 
         #region COMMANDS
 
@@ -91,15 +77,6 @@ namespace ERC.ViewModels
             }
         }
 
-        private async void EstimateMeters()
-        {
-            bd = bd ?? await App.ServicesDb.GetServicesAsync();
-
-            if (!float.TryParse(HvsIndication, out var volume)) throw new Exception();
-
-            var hvs = CalculationAlgorithms.BaseCalculation(volume, bd.Find(e => e.Name == "HVS").Tariff);
-        }
-
         private ICommand fillBDCommand;
         public ICommand FillBDCommand
         {
@@ -109,8 +86,41 @@ namespace ERC.ViewModels
             }
         }
 
+        private async void EstimateMeters()
+        {
+            bd = bd ?? await App.ServicesDb.GetAllServicesAsync();
 
+            if (!float.TryParse(HvsIndication, out var hvsCurrVolume)) throw new Exception();
+
+            CalculateService(hvsCurrVolume, "HVS");
+
+            if (!float.TryParse(GvsIndication, out var gvsCurrVolume)) throw new Exception();
+
+            CalculateService(gvsCurrVolume, "GVSTn");
+            CalculateService(gvsCurrVolume, "GVSTe");
+
+            if (!float.TryParse(EeIndication, out var eeCurrVolume)) throw new Exception();
+
+            CalculateService(eeCurrVolume, "EE");
+        }
 
         #endregion
+
+        private void CalculateService(float currVolume, string name)
+        {
+            var service = bd.Find(e => e.Name == name);
+            float result;
+
+            if (name == "GVSTe")
+            {
+                result = BaseCalculation(GvsTeCalculation(VBaseCalculation(currVolume), service.Norm), service.Tariff);
+            }
+            else
+            {
+                result =  BaseCalculation(VBaseCalculation(currVolume), service.Tariff);
+            }
+
+            calculatedServices.Add(new CalculatedService { Name = name, CurrIndication = currVolume, Price = result});
+        }
     }
 }

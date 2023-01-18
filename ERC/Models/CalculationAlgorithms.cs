@@ -19,7 +19,7 @@ namespace ERC.Models
         public static float VIndicationCalculation(float residentsCount, float norm) => residentsCount * norm;
 
         //рассчет объема услуги ГВС
-        public static float VGvsCalculation(float vtn, float nte) => vtn * nte;
+        public static float GvsTeCalculation(float vtn, float nte) => vtn * nte;
 
         //рассчет услуги ЭЭ
         public static float EeCalculation(float volumeDay, float volumeNight, float tariffDay, float tariffNight) 

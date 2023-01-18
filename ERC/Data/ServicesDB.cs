@@ -18,7 +18,7 @@ namespace ERC.Data
             db.CreateTableAsync<Service>().Wait();
         }
 
-        public Task<List<Service>> GetServicesAsync()
+        public Task<List<Service>> GetAllServicesAsync()
         {
             return db.Table<Service>().ToListAsync();
         }

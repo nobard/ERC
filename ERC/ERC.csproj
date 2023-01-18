@@ -99,6 +99,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\ServicesDB.cs" />
+    <Compile Include="Models\CalculatedService.cs" />
     <Compile Include="Models\CalculationAlgorithms.cs" />
     <Compile Include="Models\Meters.cs" />
     <Compile Include="Models\Service.cs" />
@@ -106,6 +107,7 @@
       <DependentUpon>ColourfulDarkTheme.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\DelegateCommand.cs" />
+    <Compile Include="Utilities\IntegerValidationRule.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">

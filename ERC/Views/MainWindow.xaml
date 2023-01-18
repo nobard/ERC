@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ERC.Views" 
+        xmlns:local="clr-namespace:ERC.Views"
+        xmlns:utilities="clr-namespace:ERC.Utilities"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="500"
         Style="{DynamicResource CustomWindowStyle}">
@@ -27,9 +28,9 @@
                      Width="50"
                      Margin="5">
                 <TextBox.Text>
-                    <Binding Path="ResidentsCount">
+                    <Binding Path="ResidentsCount" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <DataErrorValidationRule/>
+                            <utilities:IntegerValidationRule/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
@@ -41,6 +42,7 @@
 
             <CheckBox x:Name="HvsCheckBox"
                       Content="ХВС"
+                      IsChecked="{Binding HvsCheckBox}"
                       Margin="5"/>
             <StackPanel x:Name="HvsContent"
                         Visibility="{Binding ElementName=HvsCheckBox,Path=IsChecked,Converter={StaticResource BoolToVis}}">
@@ -61,6 +63,7 @@
 
             <CheckBox x:Name="GvsCheckBox"
                       Content="ГВС"
+                      IsChecked="{Binding GvsCheckBox}"
                       Margin="5"/>
             <StackPanel x:Name="GvsContent"
                         Visibility="{Binding ElementName=GvsCheckBox,Path=IsChecked,Converter={StaticResource BoolToVis}}">
@@ -81,6 +84,7 @@
 
             <CheckBox x:Name="EeCheckBox"
                       Content="ЭЭ"
+                      IsChecked="{Binding EeCheckBox}"
                       Margin="5"/>
             <StackPanel x:Name="EeContent"
                         Visibility="{Binding ElementName=EeCheckBox,Path=IsChecked,Converter={StaticResource BoolToVis}}">
