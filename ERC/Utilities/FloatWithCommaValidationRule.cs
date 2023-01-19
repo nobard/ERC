@@ -8,12 +8,12 @@ using System.Windows.Controls;
 
 namespace ERC.Utilities
 {
-    public class IntegerValidationRule : ValidationRule
+    public class FloatWithCommaValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (!int.TryParse((string)value, out var result)) return new ValidationResult(false, "Только целые числа");
-            
+            if (!float.TryParse((string)value, out var result)) return new ValidationResult(false, "Только дробные числа");
+
             return new ValidationResult(true, null);
         }
     }

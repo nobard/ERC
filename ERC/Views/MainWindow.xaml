@@ -52,9 +52,9 @@
                          Width="50" 
                          Margin="10, 0, 5, 5">
                     <TextBox.Text>
-                        <Binding Path="HvsIndication">
+                        <Binding Path="HvsIndication" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <DataErrorValidationRule/>
+                                <utilities:FloatWithCommaValidationRule/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -73,9 +73,9 @@
                          Width="50" 
                          Margin="10, 0, 5, 5">
                     <TextBox.Text>
-                        <Binding Path="GvsIndication">
+                        <Binding Path="GvsIndication" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <DataErrorValidationRule/>
+                                <utilities:FloatWithCommaValidationRule/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -103,9 +103,9 @@
                                  Width="50" 
                                  Margin="15, 0, 5, 5">
                             <TextBox.Text>
-                                <Binding Path="EeDayIndication">
+                                <Binding Path="EeDayIndication" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <DataErrorValidationRule/>
+                                        <utilities:FloatWithCommaValidationRule/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -118,9 +118,9 @@
                                  Width="50"
                                  Margin="15, 0, 5, 5">
                             <TextBox.Text>
-                                <Binding Path="EeNightIndication">
+                                <Binding Path="EeNightIndication" UpdateSourceTrigger="PropertyChanged">
                                     <Binding.ValidationRules>
-                                        <DataErrorValidationRule/>
+                                        <utilities:FloatWithCommaValidationRule/>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
