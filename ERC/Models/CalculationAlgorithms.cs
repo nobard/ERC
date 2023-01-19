@@ -16,13 +16,9 @@ namespace ERC.Models
         public static float VBaseCalculation(float mCurr, float mPrev = 0f) => mCurr - mPrev;
 
         //рассчет объема без прибора учета
-        public static float VIndicationCalculation(float residentsCount, float norm) => residentsCount * norm;
+        public static float VIndicationCalculation(int residentsCount, float norm) => residentsCount * norm;
 
         //рассчет объема услуги ГВС
         public static float GvsTeCalculation(float vtn, float nte) => vtn * nte;
-
-        //рассчет услуги ЭЭ
-        public static float EeCalculation(float volumeDay, float volumeNight, float tariffDay, float tariffNight) 
-            => BaseCalculation(volumeDay, tariffDay) + BaseCalculation(volumeNight, tariffNight);
     }
 }

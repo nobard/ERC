@@ -86,22 +86,49 @@
                       Content="ЭЭ"
                       IsChecked="{Binding EeCheckBox}"
                       Margin="5"/>
-            <StackPanel x:Name="EeContent"
+            <Grid x:Name="EeContent"
                         Visibility="{Binding ElementName=EeCheckBox,Path=IsChecked,Converter={StaticResource BoolToVis}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <TextBlock Text="Показания:"
                            Margin="10, 0, 5, 5"/>
-                <TextBox HorizontalAlignment="Left"
-                         Width="50" 
-                         Margin="10, 0, 5, 5">
-                    <TextBox.Text>
-                        <Binding Path="EeIndication">
-                            <Binding.ValidationRules>
-                                <DataErrorValidationRule/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-            </StackPanel>
+                <StackPanel Grid.Row="1"
+                            Orientation="Horizontal">
+                    <StackPanel>
+                        <TextBlock Text="День:"
+                                   Margin="15, 0, 5, 5"/>
+                        <TextBox HorizontalAlignment="Left"
+                                 Width="50" 
+                                 Margin="15, 0, 5, 5">
+                            <TextBox.Text>
+                                <Binding Path="EeDayIndication">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Ночь:"
+                                   Margin="15, 0, 5, 5"/>
+                        <TextBox HorizontalAlignment="Left"
+                                 Width="50"
+                                 Margin="15, 0, 5, 5">
+                            <TextBox.Text>
+                                <Binding Path="EeNightIndication">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                </StackPanel>
+                
+            </Grid>
 
         </StackPanel>
 
@@ -111,10 +138,5 @@
                 Padding="8 4"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"/>
-        <Button Grid.Row="1"
-                HorizontalAlignment="Right"
-                Content="Заполнить БД"
-                Command="{Binding FillBDCommand}"
-                Padding="8, 4"/>
     </Grid>
 </Window>

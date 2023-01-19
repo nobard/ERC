@@ -14,6 +14,7 @@ namespace ERC.Models
         public string ResidentsCount { get; set; }
         public string HvsIndication { get; set; }
         public string GvsIndication { get; set; }
-        public string EeIndication { get; set; }
+        public string EeDayIndication { get; set; }
+        public string EeNightIndication { get; set; }
     }
 }

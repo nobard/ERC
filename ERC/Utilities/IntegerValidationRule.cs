@@ -13,7 +13,7 @@ namespace ERC.Utilities
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             if (string.IsNullOrEmpty((string)value)) return new ValidationResult(true, null);
-            if (!int.TryParse((string)value, out var result)) return new ValidationResult(false, "Только цифры");
+            if (!int.TryParse((string)value, out var result)) return new ValidationResult(false, "Только целые числа");
 
             return new ValidationResult(true, null);
         }
